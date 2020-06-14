@@ -1,0 +1,20 @@
+.al-right{
+    float: right;
+    margin: 10px 0px;
+}
+.dp-inb{
+    display: inline-block;
+}
+.btn-checkout{
+    width: 110px;
+}
+.div-coupen{
+    display: inline-block;
+    padding: 15px 0px 15px 50px;
+}
+.div-cart-heading{
+    display: inline-block;
+}
+.cart-head{
+    padding-top: 20px;
+}

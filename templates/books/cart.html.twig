@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Shopping Cart {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/cart.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-lg-8">
+                <div class="cart-head">
+                    <div class="div-cart-heading">
+                        <h4>Shopping Cart </h4>
+                    </div>
+
+                    <div class="al-right">
+                        <span><a href="{{ path('home') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></span>
+                        <span>
+                            <a class="btn btn-info" href="{{ path('cart_clear') }}">Clear <i
+                                        class="fa fa-refresh"></i></a>
+                        </span>                  
+                    </div>
+                </div>
+
+                <table id="cart" class="table table-hover table-condensed">
+                    <thead>
+                    <tr>
+                        <th style="width:50%">Product</th>
+                        <th style="width:10%">Quantity</th>
+                        <th style="width:8%">Price</th>
+                        <th style="width:22%" class="text-center">Subtotal</th>
+                        <th style="width:10%"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% if cart %}
+                            {% for item in cart %}
+                                <tr>
+                                    <td><a href="{{ path('bookDetails',{'id': item.id}) }}">{{ item.title }}</a></td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>${{ item.price }}</td>
+                                    <td data-th="Subtotal" class="text-center">
+                                        {% set var_1 = 0 + item.quantity|number_format(2,'.',',') %}
+                                        {% set var_2 = 0 + item.price|number_format(2,'.',',') %}
+                                        ${{ (var_1 * var_2)|number_format(2,'.',',') }}
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger btn-sm" href="{{ path('cart_remove',{'id': item.id}) }}"><i
+                                                    class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <p>You haven't added anything to cart yet...!!!</p>
+                        {% endif %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="hidden-xs text-center"><strong>Total
+                            ${{ not app.session.get('totalPrice') ? "0" : app.session.get('totalPrice') }}</strong>
+                        </td>
+                        <td><a href="{{ path('cart_checkout') }}" class="btn btn-success btn-block btn-checkout">Checkout <i class="fa fa-angle-right"></i></a></td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+                <div class="div-coupen">
+                    <p>Enter your coupen ID to redeem the Discount : </p>
+                </div>
+                <div class="al-right">
+                    <form action="{{ path('coupon_add') }}" method="post">
+                        <div>
+                            <span class="dp-inb"><input type="text" name="coupon" class="form-control" value=""></span>
+                            {# <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"></td> #}
+                            <span class="dp-inb"><button type="submit" class="btn btn-success btn-block">Redeem Coupon</button></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

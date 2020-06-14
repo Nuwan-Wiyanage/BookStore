@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Children Book Details {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/book-details.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h3 class="book-details-heading">{{ book.title }}</h3>
+    <p>{{ book.description }}</p>
+    <hr>
+    <a href="{{ parentRoute }}"> Go Back </a>
+{% endblock %}
